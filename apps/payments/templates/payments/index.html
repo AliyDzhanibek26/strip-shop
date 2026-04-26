@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Каталог</h1>
+    <hr class="divider">
+    <ul class="items-list">
+        {% for item in items %}
+        <li>
+            <a href="/item/{{ item.pk }}/" style="color:#635bff; text-decoration:none; font-weight:500;">
+                {{ item.name }}
+            </a>
+            <span>{{ item.price }} <span class="currency-badge">{{ item.get_currency_display }}</span></span>
+        </li>
+        {% empty %}
+        <li><span style="color:#a0aec0;">Товаров пока нет</span></li>
+        {% endfor %}
+    </ul>
+    {% if orders %}
+    <hr class="divider">
+    <p style="font-weight:600; margin-bottom:.5rem;">Заказы</p>
+    <ul class="items-list">
+        {% for order in orders %}
+        <li>
+            <a href="/order/{{ order.pk }}/" style="color:#635bff; text-decoration:none; font-weight:500;">
+                Заказ #{{ order.pk }}
+            </a>
+            <span>{{ order.total_amount }} <span class="currency-badge">{{ order.currency|upper }}</span></span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

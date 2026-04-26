@@ -6,6 +6,13 @@ from apps.payments.models import Item, Order
 from apps.payments.services import stripe_service
 
 
+def index_view(request):
+    return render(request, "payments/index.html", {
+        "items": Item.objects.all(),
+        "orders": Order.objects.prefetch_related("items").all(),
+    })
+
+
 class ItemDetailView(View):
     def get(self, request, pk):
         item = get_object_or_404(Item, pk=pk)
