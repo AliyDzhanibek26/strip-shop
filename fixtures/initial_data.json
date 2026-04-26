@@ -1,0 +1,62 @@
+[
+  {
+    "model": "payments.item",
+    "pk": 1,
+    "fields": {
+      "name": "Футболка",
+      "description": "Классическая хлопковая футболка, доступна в нескольких цветах.",
+      "price": "29.99",
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "payments.item",
+    "pk": 2,
+    "fields": {
+      "name": "Кружка",
+      "description": "Керамическая кружка 350 мл с принтом.",
+      "price": "14.99",
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "payments.item",
+    "pk": 3,
+    "fields": {
+      "name": "Ноутбук",
+      "description": "Ультрабук 14\", 16 ГБ RAM, 512 ГБ SSD.",
+      "price": "999.00",
+      "currency": "eur"
+    }
+  },
+  {
+    "model": "payments.discount",
+    "pk": 1,
+    "fields": {
+      "name": "Скидка 10%",
+      "stripe_coupon_id": "",
+      "discount_type": "percent",
+      "value": "10.00"
+    }
+  },
+  {
+    "model": "payments.tax",
+    "pk": 1,
+    "fields": {
+      "name": "НДС 20%",
+      "stripe_tax_rate_id": "",
+      "percentage": "20.00",
+      "inclusive": false
+    }
+  },
+  {
+    "model": "payments.order",
+    "pk": 1,
+    "fields": {
+      "items": [1, 2],
+      "discount": 1,
+      "tax": 1,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  }
+]
