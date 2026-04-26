@@ -50,7 +50,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-_database_url = os.environ.get("DATABASE_URL") or config("DATABASE_URL", default=None)
+_database_url = (
+    os.environ.get("DATABASE_URL")
+    or config("DATABASE_URL", default=None)
+)
 
 if _database_url:
     DATABASES = {"default": dj_database_url.parse(_database_url, conn_max_age=600)}
@@ -58,11 +61,11 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("POSTGRES_DB", default="stripe_db"),
-            "USER": config("POSTGRES_USER", default="postgres"),
-            "PASSWORD": config("POSTGRES_PASSWORD", default="postgres"),
-            "HOST": config("POSTGRES_HOST", default="localhost"),
-            "PORT": config("POSTGRES_PORT", default="5432"),
+            "NAME": os.environ.get("PGDATABASE") or config("POSTGRES_DB", default="stripe_db"),
+            "USER": os.environ.get("PGUSER") or config("POSTGRES_USER", default="postgres"),
+            "PASSWORD": os.environ.get("PGPASSWORD") or config("POSTGRES_PASSWORD", default="postgres"),
+            "HOST": os.environ.get("PGHOST") or config("POSTGRES_HOST", default="localhost"),
+            "PORT": os.environ.get("PGPORT") or config("POSTGRES_PORT", default="5432"),
         }
     }
 
