@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import dj_database_url
@@ -49,10 +50,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-_database_url = config("DATABASE_URL", default=None)
+_database_url = os.environ.get("DATABASE_URL") or config("DATABASE_URL", default=None)
 
 if _database_url:
-    DATABASES = {"default": dj_database_url.parse(_database_url)}
+    DATABASES = {"default": dj_database_url.parse(_database_url, conn_max_age=600)}
 else:
     DATABASES = {
         "default": {
@@ -79,7 +80,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+_static_dir = BASE_DIR / "static"
+STATICFILES_DIRS = [_static_dir] if _static_dir.exists() else []
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
