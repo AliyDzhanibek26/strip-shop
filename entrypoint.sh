@@ -13,4 +13,6 @@ if [ -n "$DJANGO_SUPERUSER_USERNAME" ]; then
     python manage.py createsuperuser --noinput 2>/dev/null || true
 fi
 
+python manage.py loaddata fixtures/initial_data.json 2>/dev/null || true
+
 exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2
