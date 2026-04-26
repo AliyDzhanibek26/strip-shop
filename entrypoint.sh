@@ -3,14 +3,19 @@ set -e
 
 export DJANGO_SETTINGS_MODULE=config.settings.production
 
-echo "DATABASE_URL is set: $([ -n "$DATABASE_URL" ] && echo yes || echo NO)"
-echo "PGHOST: ${PGHOST:-not set}"
-
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
-if [ -n "$DJANGO_SUPERUSER_USERNAME" ]; then
-    python manage.py createsuperuser --noinput 2>/dev/null || true
+if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
+    python manage.py shell -c "
+from django.contrib.auth import get_user_model
+User = get_user_model()
+u, _ = User.objects.get_or_create(username='$DJANGO_SUPERUSER_USERNAME')
+u.is_staff = True
+u.is_superuser = True
+u.set_password('$DJANGO_SUPERUSER_PASSWORD')
+u.save()
+"
 fi
 
 python manage.py loaddata fixtures/initial_data.json 2>/dev/null || true
