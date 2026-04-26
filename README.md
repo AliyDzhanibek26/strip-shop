@@ -2,6 +2,15 @@
 
 Простой сервис приёма платежей через Stripe. Поддерживает товары, заказы, скидки и налоги. Реализованы Stripe Checkout Session и Payment Intent, мультивалютность (USD/EUR).
 
+## Демо
+
+- Товар (USD): https://strip-shop-production.up.railway.app/item/1/
+- Товар (EUR): https://strip-shop-production.up.railway.app/item/3/
+- Заказ со скидкой и налогом: https://strip-shop-production.up.railway.app/order/1/
+- Админка: https://strip-shop-production.up.railway.app/admin/ — логин `admin`, пароль `admin1234`
+
+Тестовая карта Stripe: `4242 4242 4242 4242`, любая дата в будущем, любой CVC.
+
 ## Эндпоинты
 
 | Метод | URL | Описание |
